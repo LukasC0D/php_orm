@@ -1,0 +1,23 @@
+{
+    "name": "acer/app2",
+    "description": "testas",
+    "type": "project",
+    "require": {
+        "doctrine/orm": "^2.13",
+        "symfony/cache": "^6.1",
+        "doctrine/annotations": "^1.13"
+    },
+    "autoload": {
+        "psr-4":{
+            "models\\": "src/models/"
+        }        
+    }
+,
+    "authors": [
+        {
+            "name": "LukasC0D",
+            "email": "kaupasa666@gmail.com"
+        }
+    ]
+    
+}
