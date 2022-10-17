@@ -38,9 +38,48 @@ if (isset($_GET['action']) == 'logout') {
     header('Location:' . $rootDir . '/admin');
 }
 
+// Delete page 
+
+if (isset($_POST['delete'])) {
+    $id = $_POST['delete'];
+    $update = $entityManager->find('models\Product', $id);
+    $entityManager->remove($update);
+    $entityManager->flush();
+    header('Location:' . $rootDir . '/admin');
+}
+
+ // Edit page
+
+if (isset($_POST['update-page'])) {
+    $id = $_POST['current_id'];
+    $title = $_POST['edit-title'];
+    $content = $_POST['edit-content'];
+    if (!empty($title)) {
+        $update = $entityManager->find('models\Product', $id);
+        $update->setPageName($title);
+        $update->setPageContent($content);
+        $entityManager->persist($update);
+        $entityManager->flush();
+        header('Location:' . $rootDir . '/admin');
+    }
+}
+
+// Add page
+
+if (isset($_POST['add-content'])) {
+    $title = $_POST['new-title'];
+    $content = $_POST['new-content'];
+    if (!empty($title)) {
+        $newPage = new Product();
+        $newPage->setPageName($title);
+        $newPage->setPageContent($content);
+        $entityManager->persist($newPage);
+        $entityManager->flush();
+        header('Location:' . $rootDir . '/admin');
+    }
+}
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -111,8 +150,8 @@ if (isset($_GET['action']) == 'logout') {
             print('<header class="card text-center">
                         <nav class="card-header">
                           <ul class="nav nav-pills card-header-pills d-flex justify-content-between" >
-                            <li><a  href="./admin">Admin</a></li>
-                            <li><a href="./">View Project</a></li>
+                            <li class="btn btn-success fs-12"><a class="text-white text-decoration-none" href="./admin">Admin</a></li>
+                            <li class="btn btn-success fs-12"><a class="text-white text-decoration-none" href="./">View Project</a></li>
                             <li><a class="btn btn-dark fs-12" href=?action=logout>Logout</a></li>      
                          </ul>
                         </nav>
@@ -131,7 +170,31 @@ if (isset($_GET['action']) == 'logout') {
 
                 print('<tr>
                        <td>' . $link->getPageName() . '</td>');
+
+                       $link->getId() === 1 ?
+                       print('<td>
+                           <form action="" method="POST">
+                               <input type="hidden" name="current_name" value="' . $link->getPageName() . '" />
+                               <input type="hidden" name="current_content" value="' . $link->getPageContent() . '" />
+                               <input type="hidden" name="current_id" value="' . $link->getId() . '" />
+                               <button type="submit" name="edit-page" value="">Edit</button>
+                           </form>
+                           </td>
+                       </tr>') :
+                       print('<td>
+                               <form action="" method="POST">
+                                   <input type="hidden" name="current_name" value="' . $link->getPageName() . '" />
+                                   <input type="hidden" name="current_content" value="' . $link->getPageContent() . '" />
+                                   <input type="hidden" name="current_id" value="' . $link->getId() . '" />
+                                   <button type="submit" name="edit-page" value="">Edit</button>
+                               </form>        
+                               <form action="" method="POST">
+                                   <button type="submit" name="delete" value="' . $link->getId() . '" onclick="return confirm(\'Are you sure?\')">Delete</button>
+                               </form>
+                          </td>
+                   </tr>');
             }
+            
             print('</table>');
 
             print('<form class="new-entry" action="" method="POST">
@@ -141,7 +204,7 @@ if (isset($_GET['action']) == 'logout') {
             // Add page
 
             if (isset($_POST['add-page'])) {
-                print('<form class="page-mod" action="" method="POST">
+                print('<form action="" method="POST">
                         <label for="title">Title</label><br>
                         <input type="text" name="new-title" class="title-input"><br>
                         <label for="content">New Content</label><br>
@@ -149,20 +212,21 @@ if (isset($_GET['action']) == 'logout') {
                         <button type="submit" name="add-content">Create Page</button>
                    </form>');
             }
-            if (isset($_POST['add-content'])) {
-                $title = $_POST['new-title'];
-                $content = $_POST['new-content'];
-                if (!empty($title)) {
-                    $newPage = new Product();
-                    $newPage->setPageName($title);
-                    $newPage->setPageContent($content);
-                    $entityManager->persist($newPage);
-                    $entityManager->flush();
-                    header('Location:' . $rootDir . '/admin');
-                }
-            }
-        }
 
+            // Edit page
+
+            if (isset($_POST['edit-page'])) {
+                print('<form action="" method="POST">
+                            <input type="hidden" name="current_id" value="' . $_POST['current_id'] . '">
+                            <label for="title">Title</label><br>
+                            <input type="text" name="edit-title" value="' . $_POST['current_name'] . '"><br>
+                            <label for="content">Page Content</label><br>
+                            <textarea name="edit-content" cols="100" rows="30">' . $_POST['current_content'] . '</textarea><br>
+                            <button type="submit" name="update-page">Update Page</button>
+                        </form>');
+            }
+       
+        }
         ?>
     </div>
 </body>
