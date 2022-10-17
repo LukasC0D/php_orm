@@ -7,6 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404: Page not found</title>
 </head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Raleway:wght@300&family=Roboto:ital,wght@0,500;0,700;0,900;1,500;1,700;1,900&display=swap');
+    * {
+        font-family: 'Raleway';
+     font-weight: 600;
+    }
+</style>
 <body>
     <div class="text-center">
         <img src="./src/image/404.gif" alt="Error 404 - Page Not Found" />
