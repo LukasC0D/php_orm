@@ -4,7 +4,7 @@
 
 Content management system.
 
-## Product is capable of(with admin rights):
+## Product is capable of (with admin rights):
 
 - Create a new page. 
 - Delete a page.
@@ -29,7 +29,10 @@ Content management system.
 ```sh
 git clone https://github.com/LukasC0D/php_orm.git
 ```
-- Open cloned repository with VS Code. Optional but not necessary. You can already.
+- Open cloned repository with VS Code.
+- Install composer (installation instructions: [Composer](https://getcomposer.org/download)).
+- if composer is installed locally in console type: php 'path to composer.phar file'/composer.phar install.
+- if composer is installed on your system globally in console type: composer install.
 - Run XAMPP. In the C drive run (C:/xampp/xampp-control.exe) and start the Apache server.
 - If the Apache server strated successfully open Your browser.
 - In Your browser on the searchbar type in:
@@ -37,7 +40,7 @@ git clone https://github.com/LukasC0D/php_orm.git
 ```sh
 localhost/php_orm
 ```
--Login as ADMIN to manage content!!!
+- Login as an ADMIN to manage content!!!
 ```sh
 localhost/php_orm/admin
 ```
