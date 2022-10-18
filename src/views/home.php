@@ -1,7 +1,5 @@
 <?php
 
-use models\Product;
-
 require_once "./bootstrap.php";
 
 $page = $entityManager->getRepository("models\Product")->findAll();

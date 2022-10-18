@@ -89,6 +89,11 @@ if (isset($_POST['add-content'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Raleway:wght@300&family=Roboto:ital,wght@0,500;0,700;0,900;1,500;1,700;1,900&display=swap');
+        * {
+            font-family: 'Raleway';
+            font-weight: 600;
+        }
         .box{
             position: absolute;
             top: 50%;
@@ -122,6 +127,9 @@ if (isset($_POST['add-content'])) {
             color: azure;
             padding: 12px;
         }
+        .me-7{
+            margin-right: 66px;
+        }
   
     </style>
     <title>Admin page</title>
@@ -147,7 +155,7 @@ if (isset($_POST['add-content'])) {
                     </form>
                  </div>');
         } else {
-            print('<header class="card text-center">
+            print('<header class="card text-center mb-1">
                         <nav class="card-header">
                           <ul class="nav nav-pills card-header-pills d-flex justify-content-between" >
                             <li class="btn btn-success fs-12"><a class="text-white text-decoration-none" href="./admin">Admin</a></li>
@@ -162,8 +170,6 @@ if (isset($_POST['add-content'])) {
                 <th>Actions</th>
             </tr>');
 
-
-            
             $nav = $entityManager->getRepository("models\Product")->findAll();
 
             foreach ($nav as $link) {
@@ -177,7 +183,7 @@ if (isset($_POST['add-content'])) {
                                <input type="hidden" name="current_name" value="' . $link->getPageName() . '" />
                                <input type="hidden" name="current_content" value="' . $link->getPageContent() . '" />
                                <input type="hidden" name="current_id" value="' . $link->getId() . '" />
-                               <button type="submit" name="edit-page" value="">Edit</button>
+                               <button class="btn btn-secondary fs-12 float-end me-7" type="submit" name="edit-page" value="">Edit</button>
                            </form>
                            </td>
                        </tr>') :
@@ -186,43 +192,43 @@ if (isset($_POST['add-content'])) {
                                    <input type="hidden" name="current_name" value="' . $link->getPageName() . '" />
                                    <input type="hidden" name="current_content" value="' . $link->getPageContent() . '" />
                                    <input type="hidden" name="current_id" value="' . $link->getId() . '" />
-                                   <button type="submit" name="edit-page" value="">Edit</button>
+                                   <div class="d-flex justify-content-end">
+                                       <button class="btn btn-secondary fs-12 me-1" type="submit" name="edit-page" value="">Edit</button>
+                                       <button class="btn btn-danger fs-12" type="submit" name="delete" value="' . $link->getId() . '" onclick="return confirm(\'Are you sure?\')">Delete</button>
+                                   </div>
                                </form>        
-                               <form action="" method="POST">
-                                   <button type="submit" name="delete" value="' . $link->getId() . '" onclick="return confirm(\'Are you sure?\')">Delete</button>
-                               </form>
                           </td>
                    </tr>');
             }
             
             print('</table>');
 
-            print('<form class="new-entry" action="" method="POST">
-                    <button type="submit" name="add-page">Add New Page</button>
+            print('<form action="" method="POST">
+                    <button class="btn btn-info mt-1 fs-12 text-white" type="submit" name="add-page">Add New Page</button>
                 </form>');
 
             // Add page
 
             if (isset($_POST['add-page'])) {
-                print('<form action="" method="POST">
+                print('<form class="mt-2" action="" method="POST">
                         <label for="title">Title</label><br>
                         <input type="text" name="new-title" class="title-input"><br>
                         <label for="content">New Content</label><br>
                         <textarea name="new-content" cols="100" rows="30"></textarea><br>
-                        <button type="submit" name="add-content">Create Page</button>
+                        <button class="btn btn-secondary fs-12 type="submit" name="add-content">Create Page</button>
                    </form>');
             }
 
             // Edit page
 
             if (isset($_POST['edit-page'])) {
-                print('<form action="" method="POST">
+                print('<form class="mt-2" action="" method="POST">
                             <input type="hidden" name="current_id" value="' . $_POST['current_id'] . '">
                             <label for="title">Title</label><br>
                             <input type="text" name="edit-title" value="' . $_POST['current_name'] . '"><br>
                             <label for="content">Page Content</label><br>
                             <textarea name="edit-content" cols="100" rows="30">' . $_POST['current_content'] . '</textarea><br>
-                            <button type="submit" name="update-page">Update Page</button>
+                            <button class="btn btn-secondary fs-12 type="submit" name="update-page">Update Page</button>
                         </form>');
             }
        
