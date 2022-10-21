@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `random_database`
+CREATE DATABASE  IF NOT EXISTS `random_database`;
 USE `random_database`;
 DROP TABLE IF EXISTS `pages`;
 CREATE TABLE `pages` (
